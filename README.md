@@ -446,3 +446,114 @@ The firewall action was **Allowed**, increasing the potential risk of credential
 ## Outcome
 
 Case 8817 was classified as a **True Positive phishing incident**. Unlike the previous blocked connection, the network connection associated with this incident was **allowed**. Due to the possibility of credential compromise or additional endpoint activity, the case was **escalated for further investigation**.
+
+
+---
+
+# SOC Case 8814 – Inbound Email Containing Suspicious External Link
+
+## Alert Overview
+
+- **Alert ID:** 8814
+- **Alert Type:** Inbound Email Containing Suspicious External Link
+- **Severity:** Medium
+- **Category:** Phishing
+- **Timestamp:** 08/14/2026 09:44:31.285
+- **Sender:** onboarding@hrconnex.thm
+- **Recipient:** j.garcia@thetrydaily.thm
+- **Subject:** Action Required: Finalize Your Onboarding Profile
+- **Attachment:** None
+- **Final Classification:** **False Positive**
+- **Escalation Required:** No
+
+## Executive Summary
+
+Alert 8814 was generated after an inbound email containing an external link was delivered to an employee. The email instructed the recipient to complete an onboarding profile through HRConnex.
+
+The alert was investigated using email telemetry, SIEM correlation, internal email correspondence, and URL reputation analysis. Investigation confirmed that HRConnex is an authorized third-party HR partner used by TheTryDaily for employee onboarding. The embedded URL was also analysed and returned a **CLEAN** result.
+
+No evidence of phishing or malicious activity was identified. The alert was therefore classified as a **False Positive**.
+
+## 5Ws Analysis
+
+### Who?
+- **Sender:** onboarding@hrconnex.thm
+- **Recipient:** j.garcia@thetrydaily.thm
+- The internal correspondence confirmed HRConnex as a third-party HR onboarding provider.
+
+### What?
+An inbound onboarding email containing an external URL triggered a phishing-related security alert.
+
+### When?
+The alert activity occurred on **August 14, 2026 at approximately 09:44 UTC**.
+
+### Where?
+The activity involved the recipient **j.garcia@thetrydaily.thm** and the external HRConnex onboarding infrastructure.
+
+### Why?
+The alert was triggered because the inbound email contained an external URL. Investigation established that the URL was associated with a legitimate employee onboarding process rather than phishing activity.
+
+## Investigation Process
+
+### 1. Initial Alert Review
+
+The alert details were reviewed to identify the sender, recipient, subject, email content, and embedded external URL.
+
+The email contained the following onboarding URL:
+
+`https://hrconnex.thm/onboarding/15400654060/j.garcia`
+
+### 2. SIEM Investigation
+
+A SIEM search was performed for:
+
+`hrconnex.thm`
+
+The search returned email-related events associated with the onboarding activity.
+
+Internal email correspondence showed that HRConnex was the organisation's third-party HR partner responsible for handling employee onboarding and account setup.
+
+This provided important contextual evidence that the email was legitimate.
+
+### 3. URL Reputation Analysis
+
+The embedded onboarding URL was analysed using the URL/IP Security Check tool.
+
+**Result: CLEAN**
+
+No malicious reputation was identified for the URL.
+
+### 4. Correlation and Validation
+
+The email alert, SIEM events, internal correspondence, and URL reputation results were correlated.
+
+The evidence supported legitimate business activity associated with employee onboarding rather than a phishing campaign.
+
+## Related Entities
+
+- `j.garcia@thetrydaily.thm`
+- `onboarding@hrconnex.thm`
+- `hrconnex.thm`
+- `https://hrconnex.thm/onboarding/15400654060/j.garcia`
+
+## Classification
+
+**False Positive**
+
+### Closure Rationale
+
+The alert was classified as a False Positive because investigation confirmed that HRConnex is an authorized third-party HR partner used for employee onboarding. Internal correspondence validated the expected onboarding activity, while security analysis of the embedded URL returned a **CLEAN** status.
+
+No evidence of credential harvesting, malware delivery, malicious redirection, or other phishing activity was identified.
+
+## Escalation Decision
+
+**No escalation required.**
+
+The investigation established legitimate business activity with no evidence of compromise or malicious behaviour.
+
+## Outcome
+
+Alert **8814** was investigated and closed as a **False Positive**.
+
+The case demonstrates the importance of correlating automated security alerts with SIEM telemetry, business context, internal communications, and reputation analysis before determining whether an alert represents genuine malicious activity.
