@@ -223,3 +223,86 @@ This project documents work completed in a **simulated cybersecurity training en
 
 The investigation does not represent an actual compromise of Microsoft, and no confidential corporate or personal production data is included.
 
+
+
+---
+
+# SOC Investigation Case 8816 — Malicious URL Access / Phishing
+
+## Incident Summary
+
+A high-severity firewall alert was generated after internal source IP `10.20.2.17` attempted to access a blacklisted external URL. Investigation of SIEM, firewall, email, and URL reputation data established that the URL originated from an inbound phishing email impersonating Amazon delivery services.
+
+The suspicious URL was independently identified as malicious, and firewall telemetry confirmed that the connection attempt was blocked. Based on the correlated evidence, the incident was classified as a **True Positive**.
+
+## Alert Details
+
+- **Case ID:** 8816
+- **Alert:** Access to Blacklisted External URL Blocked by Firewall
+- **Severity:** High
+- **Data Source:** Firewall
+- **Source IP:** `10.20.2.17`
+- **Source Port:** `34257`
+- **Destination IP:** `67.199.248.11`
+- **Destination Port:** `80`
+- **Protocol:** TCP
+- **Application:** Web Browsing
+- **Firewall Action:** Blocked
+- **Rule:** Blocked Websites
+- **Malicious URL:** `http://bit.ly/3sHkX3da12340`
+- **Activity Time:** `2026-08-14 13:54:59.234`
+
+## Investigation — 5Ws
+
+**Who:** Internal host `10.20.2.17`, associated during SIEM correlation with email recipient `h.harris@thetrydaily.thm`.
+
+**What:** The host attempted to access a malicious shortened URL delivered through a phishing email. The firewall detected the request and blocked the connection.
+
+**When:** The phishing email was observed at approximately `13:53:45`, followed by the malicious URL access attempt at `13:54:59` on 14 August 2026.
+
+**Where:** Activity originated from internal source IP `10.20.2.17` and targeted external destination IP `67.199.248.11` over TCP port 80.
+
+**Why:** SIEM correlation showed that the URL appeared in an inbound email claiming that an Amazon package could not be delivered and requesting the recipient to update shipping information. URL/IP analysis subsequently classified the URL as malicious.
+
+## SIEM Investigation
+
+SIEM searches were performed using the source IP, destination IP, malicious URL, and email-related indicators.
+
+The investigation correlated:
+
+- A phishing email containing the suspicious shortened URL.
+- An inbound message sent from `urgents@amazon.biz`.
+- Recipient `h.harris@thetrydaily.thm`.
+- Subject: **Your Amazon Package Couldn't Be Delivered - Action Required**
+- A subsequent firewall connection attempt from `10.20.2.17`.
+- Destination `67.199.248.11`.
+- The firewall successfully blocking the malicious URL request.
+### Investigation Evidence
+
+The following screenshots document the SIEM investigation and correlation of the phishing email, malicious URL, affected host, and firewall activity.
+## Classification
+
+**True Positive**
+
+The alert was classified as a True Positive because multiple independent data sources corroborated malicious activity. The suspicious URL was present in an inbound phishing email, URL analysis classified it as malicious, and firewall telemetry confirmed an attempted connection to the associated destination.
+
+## Indicators of Compromise / Attack Indicators
+
+- Malicious URL: `http://bit.ly/3sHkX3da12340`
+- Destination IP: `67.199.248.11`
+- Suspicious sender: `urgents@amazon.biz`
+- Internal source IP: `10.20.2.17`
+- Phishing subject: **Your Amazon Package Couldn't Be Delivered - Action Required**
+
+## Recommended Remediation
+
+- Block the malicious URL and associated destination IP across applicable security controls.
+- Search email infrastructure for additional messages from the suspicious sender or containing the same URL.
+- Remove matching phishing emails from affected mailboxes.
+- Review endpoint, firewall, proxy, DNS, and email telemetry for additional related activity.
+- Assess the affected endpoint for evidence of compromise.
+- Reinforce phishing-awareness guidance for affected users.
+
+## Outcome
+
+The malicious connection attempt was blocked by the firewall, the alert was investigated and correlated with phishing activity, and Case 8816 was closed as a **True Positive**.
