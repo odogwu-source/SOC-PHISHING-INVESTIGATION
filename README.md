@@ -280,6 +280,32 @@ The investigation correlated:
 ### Investigation Evidence
 
 The following screenshots document the SIEM investigation and correlation of the phishing email, malicious URL, affected host, and firewall activity.
+
+#### Evidence 1 – Initial Alert / Case Review
+
+![Initial Alert](images/Screenshot%202026-08-14%20143645.png)
+
+#### Evidence 2 – SIEM Investigation
+
+![SIEM Investigation](images/Screenshot%202026-08-14%20144205.png)
+
+#### Evidence 3 – Email and URL Correlation
+
+![Email Investigation](images/Screenshot%202026-08-14%20144443.png)
+
+#### Evidence 4 – Firewall Telemetry
+
+![Firewall Telemetry](images/Screenshot%202026-08-14%20145452.png)
+
+#### Evidence 5 – Investigation and Incident Classification
+
+![Incident Classification](images/Screenshot%202026-08-14%20152559.png)
+
+#### Evidence 6 – Final Incident Report / Closure
+
+![Incident Closure](images/Screenshot%202026-08-14%20152642.png)
+
+---
 ## Classification
 
 **True Positive**
