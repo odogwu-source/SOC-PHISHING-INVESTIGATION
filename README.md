@@ -557,3 +557,24 @@ The investigation established legitimate business activity with no evidence of c
 Alert **8814** was investigated and closed as a **False Positive**.
 
 The case demonstrates the importance of correlating automated security alerts with SIEM telemetry, business context, internal communications, and reputation analysis before determining whether an alert represents genuine malicious activity.
+
+
+## Case 8814 – Investigation Evidence
+
+### Evidence 1 – Initial Alert / Email Review
+![Case 8814 Initial Alert](images/Screenshot%202026-08-14%20095130.png)
+
+### Evidence 2 – SIEM Investigation
+![Case 8814 SIEM Investigation](images/Screenshot%202026-08-14%20100553.png)
+
+### Evidence 3 – SIEM Correlation
+![Case 8814 SIEM Correlation](images/Screenshot%202026-08-14%20110323.png)
+
+### Evidence 4 – Internal Email Validation
+![Case 8814 Internal Email Validation](images/Screenshot%202026-08-14%20110603.png)
+
+### Evidence 5 – URL Security Analysis
+![Case 8814 URL Analysis](images/Screenshot%202026-08-14%20111127.png)
+
+### Evidence 6 – Incident Classification / Closure
+![Case 8814 False Positive Classification](images/Screenshot%202026-08-14%20112058.png)
