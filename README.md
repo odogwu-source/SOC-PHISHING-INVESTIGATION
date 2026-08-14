@@ -332,3 +332,117 @@ The alert was classified as a True Positive because multiple independent data so
 ## Outcome
 
 The malicious connection attempt was blocked by the firewall, the alert was investigated and correlated with phishing activity, and Case 8816 was closed as a **True Positive**.
+
+
+---
+
+# SOC Case 8817 – Inbound Email Containing Suspicious External Link
+
+## Alert Overview
+
+- **Case ID:** 8817
+- **Alert:** Inbound Email Containing Suspicious External Link
+- **Severity:** Medium
+- **Category:** Phishing
+- **Timestamp:** 14 August 2026 at approximately 09:50
+- **Recipient:** `c.allen@thetrydaily.thm`
+- **Sender:** `no-reply@m1crosoftsupport.co`
+- **Subject:** **Unusual Sign-In Activity on Your Microsoft Account**
+- **Attachment:** None
+- **Direction:** Inbound
+
+## Investigation – 5Ws
+
+**Who:**  
+The phishing email targeted `c.allen@thetrydaily.thm`. Subsequent network activity was observed from internal endpoint `10.20.2.25`.
+
+**What:**  
+An inbound email impersonating Microsoft Account Security contained a suspicious external link directing the recipient to `https://m1crosoftsupport.co/login`. SIEM investigation identified a subsequent outbound web connection associated with the phishing URL.
+
+**When:**  
+The email event occurred on 14 August 2026 at approximately `09:50:02`, followed by network activity at approximately `09:51:11`.
+
+**Where:**  
+The phishing email was delivered to `c.allen@thetrydaily.thm`, and subsequent activity originated from internal endpoint `10.20.2.25` and connected to destination IP `45.148.10.131` over TCP port `443`.
+
+**Why:**  
+The email used a lookalike Microsoft domain and an unusual sign-in warning to create urgency and persuade the recipient to follow the embedded link. SIEM correlation showed that the internal endpoint subsequently accessed the associated infrastructure.
+
+## SIEM Investigation
+
+SIEM searches were performed to correlate the suspicious sender/domain, URL, internal source IP, and destination IP.
+
+The investigation identified:
+
+- Suspicious sender: `no-reply@m1crosoftsupport.co`
+- Suspicious domain: `m1crosoftsupport.co`
+- Phishing URL: `https://m1crosoftsupport.co/login`
+- Internal source IP: `10.20.2.25`
+- Destination IP: `45.148.10.131`
+- Destination port: `443`
+- Protocol: TCP
+- Application: Web Browsing
+- Firewall action: **Allowed**
+- Firewall rule: `Allow-Internet`
+
+The SIEM evidence therefore demonstrated correlation between the inbound phishing email and subsequent network activity from the recipient's environment.
+
+## Investigation Evidence
+
+### Evidence 2 – Suspicious URL Analysis
+
+![Case 8817 Evidence 1](images/Screenshot%202026-08-14%20122606.png)
+
+### Evidence 1 – Initial Alert / Email Review
+
+![Case 8817 Evidence 2](images/Screenshot%202026-08-14%20125141.png)
+
+### Evidence 3 – SIEM Correlation
+
+![Case 8817 Evidence 3](images/Screenshot%202026-08-14%20130028.png)
+
+### Evidence 4 – Firewall / Network Activity
+
+![Case 8817 Evidence 4](images/Screenshot%202026-08-14%20130208.png)
+
+### Evidence 5 – Incident Investigation
+
+![Case 8817 Evidence 5](images/Screenshot%202026-08-14%20130517.png)
+
+### Evidence 6 – Incident Classification and Escalation
+
+![Case 8817 Evidence 6](images/Screenshot%202026-08-14%20130539.png)
+
+## Classification
+
+**True Positive – Escalation Required**
+
+The alert was classified as a **True Positive** because the suspicious inbound email contained a phishing URL using a Microsoft lookalike domain, and SIEM/firewall telemetry showed subsequent network activity from internal endpoint `10.20.2.25` to the associated destination.
+
+The firewall action was **Allowed**, increasing the potential risk of credential exposure or additional malicious activity. The incident therefore required escalation for further endpoint and account investigation.
+
+## Indicators of Compromise / Attack Indicators
+
+- **Suspicious sender:** `no-reply@m1crosoftsupport.co`
+- **Suspicious domain:** `m1crosoftsupport.co`
+- **Malicious URL:** `https://m1crosoftsupport.co/login`
+- **Destination IP:** `45.148.10.131`
+- **Internal source IP:** `10.20.2.25`
+- **Destination port:** `443`
+- **Phishing subject:** **Unusual Sign-In Activity on Your Microsoft Account**
+
+## Recommended Remediation
+
+- Block `m1crosoftsupport.co`, the malicious URL, and associated destination IP across applicable security controls.
+- Isolate and investigate endpoint `10.20.2.25`.
+- Review browser, endpoint, DNS, proxy, and firewall telemetry for additional malicious activity.
+- Determine whether the user entered credentials or downloaded any content.
+- Reset the affected user's credentials and revoke active sessions if credential exposure is suspected.
+- Enable or verify MFA for the affected account.
+- Search the email environment for additional recipients of the phishing message.
+- Remove matching phishing emails from affected mailboxes.
+- Monitor for suspicious authentication activity associated with the affected account.
+
+## Outcome
+
+Case 8817 was classified as a **True Positive phishing incident**. Unlike the previous blocked connection, the network connection associated with this incident was **allowed**. Due to the possibility of credential compromise or additional endpoint activity, the case was **escalated for further investigation**.
